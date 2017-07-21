@@ -32,7 +32,6 @@ input
 		<div>
 			<h1>Instagram</h1>
 			<h3>Signup to see your photos and videos from your friends</h3></div>
-		<h4>Today's Date and Time : {{ today }}</h4>
                         <form method="post">
 			<div>	     
 			<label></label><br>
