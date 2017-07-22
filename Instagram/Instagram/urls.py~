@@ -19,7 +19,7 @@ from views import signup_view
 
 urlpatterns = [
    url(r'^admin/', admin.site.urls),
-   url(r'^text/', signup_view),    
+   url(r'^test/', signup_view),    
 ]
 
 

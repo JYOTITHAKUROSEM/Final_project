@@ -1,70 +1,109 @@
-<!doctype html>
-
+<!Doctype html>
 <html>
-	<head>
-		<title>Sign up to see your photos and videos from your friends</title>
-		<meta charset="urf-8">
-		<meta http-equiv="X-UA-Compatible"content="IE=edge">
-		<meta name="viewport"content="width=device-width,initial-scale=1"
-		<!-Bootstrap-->
-		<link href="css/bootstrap.css"rel="stylesheet">
-	</head>
-	<body>
-<style>
-h1,h3
-{
-	font-size=40px;
-        color:Blue;
-        text-align:center;
-        font-weight:bold;
-        }
-div
-{
-	text-align:center;
-}
-input
-{
-	color:blue;
-	font-weight:bold;
-}
+   <head>
+      <title>Sign Up</title>
 
-</style>
-		<div>
-			<h1>Instagram</h1>
-			<h3>Signup to see your photos and videos from your friends</h3></div>
-		<h4>Today's Date and Time : {{ today }}</h4>
-                        <form method="post">
-			<div>	     
-			<label></label><br>
-			      <input type="text"placeholder="Enter email or Mobile no"value=""><br>
-          
-        
-           		      </div>
-		  <div>
-			      <label></label><br>
-			      <input type="text"placeholder="Full Name"value=""><br>
-			      </div>
-		  <div>
-			       <labe</label><br>
-	                      <input type="text"placeholder="User Name"value=""><br>
-		       </div>
-			      
-			       <div>
-				       <label> </label><br>
-				       <input type="password"placeholder="Password"value=""><br>
-			       </div>
-                               <div>
-				       <label> </label><br>
-				       <input type="password"placeholder="confirm password"value=""><br><br>
-			       </div>
-			       <div>
-				       <input type="submit"value="Signup"></div>		       </form>
-		       </div>
-		       <!-javascript files-->
-		       <!jquery library-->
-		       <script src="js/jquery-3.2.1.js"></script>
-		       <!-bootstrap js library-->
-		       <script src="js/bootstrap.js"></script>
-	       </body>
-       </html>
+          <meta charset="utf-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+       <!--Bootstrap-->
+      <link href="css/bootstrap.css" rel="stylesheet">
+   <style>
+       h1
+       {
+            background-color:#ffff;
+            width:50%;
+            font:vani;
+            size:90px;
+            color:grey;
+       }
+            #id1
+       {
+            margin-left:50px;
+            margin-right:25px;
+            height:30px;
+            width:250px;
+       }
+       demo
+       {
+            background-color:black;
+            width:30%;
+            height:800px;
+            align:center;
+       }
+       .d1
+       {
+            font-style:bold;
+            float:center;
+            font:Times new roman;
+            font-size:20px;
+            background-color:#F5FFFA;
+            color:grey;
+       }
+       a:link,a:visited {
+       background-color:blue;
+       display:inline block;
+            text-decoration:none;
+       border_radius:5px;
+             text-align:center;
+       padding: 8px 15px;
+       color:white;
+               }
+       }
+        .div1 {
+            width:500px;
+            height: 200px;
+            padding:30px;
+            border: 1px solide grey;
+               }
+        .flex-container{
+             display: -webkit-flex;
+             display: flex;
+                      width:400px;
+             height: 250px;
+             background-color:lightgrey;
+             align:center;
+             }
+        .flex-item{
+            background-color : pink;
+            width: 100px;
+               height: 500px;
+            margin:10px;
+            align:center;
+   </style>
+   </head>
+   <body>
+        <!--row!-->
+        <table align="center"><tbody><tr><td>
+            <img src="C:\Users\Admin\PycharmProjects\Final_project\Instagram\demoapp\templates\IMG_20170722_115339_356.JPG"height="100%"width="100%"class="img-thumbnail"></img>  </td><td bgcolor="#F5FFFA">
+            <div class="row"align="center"class="flex-container">
+                <div class="col-sm-4 col-sm-offset-4" class="div1"></div>
+
+                      <h1 id="h1">Instagram Clone</h1>
+                      <p class="d1" bgcolor="#F5FFFA">
+                      Signup to see your photos and vidios <br>from your friends..</p>
+                      <br>
+                <a href="gggg.html"target="_blank"><b>Log in with facebook</b></a><br><br><br>
+               <form id="demo"method="POST">
+               {% csrf_token %}<br>
+                <input id="id1" type="text" name="username" value="{{ username }}"placeholder="Username"size="50"><br><br>
+               <input id="id1" type="text" name="name" value="{{ name }}"placeholder="Name"size="50"><br><br>
+
+
+                   <input id="id1" type="text" name="Mobile No.Or Email" value="{{ email }}"placeholder="Mobile No.Or Email"size="50"><br>
+                 <input id="id1" type="password" value="{{ password }}"placeholder="Password"size="50">
+                   <div>
+                   <input type="submit"value="signup"></div>
+                  </form><br><br>
+                  </div></td></tr>
+        </td></tbody></table>
+      <!--Javascript files-->
+      <!--Jquery library-->
+      <script src="js/jquery-3.2.1.js"></script>
+      <!--Bootstrap js Library-->
+      <script scr="js/bootstrap.js"></script>
+
+   </body>
+</html>
+
 
