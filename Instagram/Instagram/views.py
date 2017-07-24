@@ -13,7 +13,7 @@ from imgurpython import ImgurClient
 # client_secret = '2520684355b7cf9e0941c6d82bcf392af1807084'
 # client = ImgurClient(client_id, client_secret)
 
-from django.contrib.auth.hashers import make_password,check_password
+from django.contrib.auth.hashers import make_password, check_password
 #Create your views here
 def signup_view(request):
   #business logic.
@@ -37,36 +37,34 @@ def signup_view(request):
          print "Signup failed !try again"
    return render(request, 'signup.html', {'form':form})
 def login_view(request):
-    if request.method == 'GET':
-        #display login form
-        login_form = LoginForm()
-        template_name = 'login.html'
-    elif request.method == 'POST':
+     if request.method == 'GET':
+         #display login form
+         template_name = 'login.html'
+         login_form = LoginForm()
+     elif request.method == 'POST':
         #process the form data
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
-            #validation successful
-            username = login_form.cleaned_data['username']
-            password = login_form.cleaned_data['password']
-            #read data from db
-            user = UserModel.objects.filter(username=username).first()
-            if user:
-                #compare the password
-                if check_password(password, user.password):
-                    #login successful
-                    template_name = 'login_success.html'
-                else:
-                    #login failed.
+             #validation successful
+             username = login_form.cleaned_data['username']
+             password = login_form.cleaned_data['password']
+             #read data from db
+             user = UserModel.objects.filter(username=username).first()
+             if user:
+                 #compare password
+                 if check_password(password, user.password):
+                     #login successful
+                     template_name = 'login_success.html'
+                     return render(request, template_name)
+                 else:
+                      #login failed.
+                      template_name = 'login_fail.html'
+                      return render(request, template_name, {'login_form': LoginForm})
+
+             else:
+                    #user does not exist in db.
                     template_name = 'login_fail.html'
-            else:
-                #user does not exist in db.
-                template_name = 'login_fail.html'
-        else:
-            #validation failed
-            template_name = 'login_fail.html'
-
-    return render(request, template_name, {'login_form':login_form})
-
+     return render(request, template_name, {'login_form':LoginForm})
 
 
 
@@ -75,8 +73,6 @@ def login_view(request):
 
 def feed_view(request):
    return render(request, 'feed.html')
-
-
 def check_validation(request):
    if request.COOKIES.get('session_token'):
       session = SessionToken.objects.filter(session_token=request.COOKIES.get('session_token')).first()
@@ -175,4 +171,5 @@ def check_validation(request):
             return session.user
    else:
       return None
+
 
