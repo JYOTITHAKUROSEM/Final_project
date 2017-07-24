@@ -23,12 +23,13 @@ from django.conf.urls.static import static
 # from views import post_view
 # from views import feed_view
 urlpatterns = [
-   url('login/', login_view),
-   url('signup/', signup_view),
-   url('post/', post_view),
-   url('feed/', feed_view),
-   url('like/', like_view),
-   url('comment/', comment_view),
+   url(r'^admin/', admin.site.urls),
+   url(r'^login/', login_view),
+   url(r'^signup/', signup_view),
+   url(r'^post/', post_view),
+   url(r'^feed/', feed_view),
+   url(r'^like/', like_view),
+   url(r'^comment/', comment_view),
 
 ]
 
