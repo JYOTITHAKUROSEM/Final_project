@@ -1,45 +1,41 @@
-# _*_ coding: utf-8 _*_
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
-from django.shortcuts import render, redirect
-from datetime import datetime
-from Demoapp.forms import SignUpForm, LoginForm, PostForm, LikeForm, CommentForm
-from django.contrib.auth.hashers import make_password, check_password
-from Demoapp.models import UserModel, SessionToken, PostModel, LikeModel, CommentModel
+from django.shortcuts import render,redirect
+#from datetime import datetime
+from demoapp.forms import SignUpForm, LoginForm, PostForm, CommentForm, LikeForm
+from demoapp.models import UserModel, PostModel, LikeModel, CommentModel, SessionToken
+from Instagram.settings import BASE_DIR
 from datetime import timedelta
 from django.utils import timezone
-from Django_Project.settings import BASE_DIR
-#from imgurpython import ImgurClient
+from imgurpython import ImgurClient
 
+# client_id = '005535c6f80c2dc'
+# client_secret = '2520684355b7cf9e0941c6d82bcf392af1807084'
+# client = ImgurClient(client_id, client_secret)
 
-
-# Create your views here.
+from django.contrib.auth.hashers import make_password,check_password
+#Create your views here
 def signup_view(request):
-    if request.method == 'GET':
-        #display signup form
-        signup_form = SignUpForm()
-        template_name = 'signup.html'
-    elif request.method == 'POST':
-        #process the form data
-        signup_form = SignUpForm(request.POST)
-        #validate the form data
-        if signup_form.is_valid():
-            #validation successful
-            username = signup_form.cleaned_data['username']
-            name = signup_form.cleaned_data['name']
-            email = signup_form.cleaned_data['email']
-            password = signup_form.cleaned_data['password']
-            #save data to db
-            new_user = UserModel(name=name, email=email, password=make_password(password), username=username)
+  #business logic.
+   if request.method == 'GET':
+     # today = datetime.now
+     form = SignUpForm()
+     template_name = 'signup.html'
+   elif request.method == 'POST':
+         form = SignUpForm(request.POST)
+         if form.is_valid():
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            name = form.cleaned_data['name']
+            password = form.cleaned_data['password']
+            # insert data to database
+            new_user = UserModel(name=name, password=make_password(password), username=username, email=email )
             new_user.save()
             template_name = 'success.html'
-
-    else:
-        form = SignUpForm()
-
-
-    return render(request, template_name, {'signup_form':signup_form})
-
+         return render(request, 'success.html')
+   else:
+         print "Signup failed !try again"
+   return render(request, 'signup.html', {'form':form})
 def login_view(request):
     if request.method == 'GET':
         #display login form
