@@ -15,12 +15,21 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from views import login_view
-from views import signup_view
+from django.conf import settings
+from django.conf.urls.static import static
+from views import login_view, signup_view, login_view, feed_view, post_view, like_view, comment_view
+from django.conf.urls.static import static
+# from views import signup_view
+# from views import post_view
+# from views import feed_view
 urlpatterns = [
-   url(r'^admin/', admin.site.urls),
-   url(r'^login/', login_view),
-  # url(r'^signup/', signup_view),
+   url('login/', login_view),
+   url('signup/', signup_view),
+   url('post/', post_view),
+   url('feed/', feed_view),
+   url('like/', like_view),
+   url('comment/', comment_view),
+
 ]
 
 
