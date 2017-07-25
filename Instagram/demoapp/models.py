@@ -17,6 +17,7 @@ class SessionToken(models.Model):
     is_valid = models.BooleanField(default=True)
     def create_token(self):
         self.session_token = uuid.uuid4()
+
 class PostModel(models.Model):
 	user = models.ForeignKey(UserModel)
 	image = models.FileField(upload_to='user_images')
@@ -25,6 +26,7 @@ class PostModel(models.Model):
 	created_on = models.DateTimeField(auto_now_add=True)
 	updated_on = models.DateTimeField(auto_now=True)
 	has_liked = False
+
 def like_count(self):
 		return len(LikeModel.objects.filter(post=self))
 def comments(self):

@@ -93,11 +93,11 @@
          {% csrf_token %}
             <div>
                <label for="username">Username:</label>
-               <input id="username" type="text" name="username" value="">
+               <input id="username" type="text" name="username" value="{{ username }}">
                  </div>
             <div>
                <label for="password">Password:</label>
-               <input id="password" type="Password" name="password" value="">
+               <input id="password" type="Password" name="password" value="{{ password }}">
             </div>
                <input type="submit" value="Login" class="btn btn-success">
          </form>
