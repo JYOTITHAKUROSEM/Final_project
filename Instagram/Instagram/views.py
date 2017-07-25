@@ -8,12 +8,11 @@ from Instagram.settings import BASE_DIR
 from datetime import timedelta
 from django.utils import timezone
 from imgurpython import ImgurClient
+from django.contrib.auth.hashers import make_password, check_password
 
 # client_id = '005535c6f80c2dc'
 # client_secret = '2520684355b7cf9e0941c6d82bcf392af1807084'
 # client = ImgurClient(client_id, client_secret)
-
-from django.contrib.auth.hashers import make_password, check_password
 #Create your views here
 def signup_view(request):
   #business logic.
@@ -65,9 +64,10 @@ def login_view(request):
                      return response
                  else:
                      return render(request,'login_fail.html')
-    elif request.method == 'GET':
-        #form = LoginForm()
-        return render(request, 'login.html', response_data)
+         elif request.method == 'GET':
+              form = LoginForm()
+              response_data['form'] = form
+    return render(request, 'login.html', response_data)
 
                  #login successful
                      # template_name = 'login_success.html'
@@ -81,8 +81,9 @@ def login_view(request):
 
      #return render(request, template_name, {'login_form':LoginForm})
 
-# def feed_view(request):
-#    return render(request, 'feed.html')
+def feed_view(request):
+
+   return render(request, 'feed.html')
 def check_validation(request):
    if request.COOKIES.get('session_token'):
       session = SessionToken.objects.filter(session_token=request.COOKIES.get('session_token')).first()
@@ -92,45 +93,45 @@ def check_validation(request):
       return None
 
 
-def post_view(request):
-   user = check_validation(request)
-   if user:
-      if request.method == 'POST':
-         form = PostForm(request.POST, request.FILES)
-         if form.is_valid():
-            image = form.cleaned_data.get('image')
-            caption = form.cleaned_data.get('caption')
-            post = PostModel(user=user, image=image, caption=caption)
-            post.save()
-            path = str(BASE_DIR + post.image)
-            client = ImgurClient('005535c6f80c2dc', '2520684355b7cf9e0941c6d82bcf392af1807084')
-            post.image_url = client.upload_from_path(path, anon=True)['link']
-            post.save()
-            return redirect('/login/')
-         else:
-             return redirect("/login/")
-      else:
-          return redirect('/login/')
-   else:
-      return redirect('/login/')
+# def feed_view(request):
+#    user = check_validation(request)
+#    if user:
+#       if request.method == 'POST':
+#          form = PostForm(request.POST, request.FILES)
+#          if form.is_valid():
+#             image = form.cleaned_data.get('image')
+#             caption = form.cleaned_data.get('caption')
+#             post = PostModel(user=user, image=image, caption=caption)
+#             post.save()
+#             path = str(BASE_DIR + post.image)
+#             client = ImgurClient('005535c6f80c2dc', '2520684355b7cf9e0941c6d82bcf392af1807084')
+#             post.image_url = client.upload_from_path(path, anon=True)['link']
+#             post.save()
+#             return redirect('/login/')
+#          else:
+#               return redirect("/login/")
+#       else:
+#            return redirect('/login/')
+#    else:
+#        return redirect('/login/')
+#
 
 
 
 
+# def feed_view(request):
+#    user = check_validation(request)
+#    if user:
+#        posts = PostModel.objects.all().order_by('created_on')
+#        for post in posts:
+#           existing_like = LikeModel.objects.filter(post_id=post.id, user=user).first()
+#           if existing_like:
+#              post.has_liked = True
+#        return render(request, 'feed.html', {'posts': posts})
+#    else:
+#       return redirect('/login')
+#
 
-""" def feed_view(request):
-   user = check_validation(request)
-   if user:
-       posts = PostModel.objects.all().order_by('created_on')
-       for post in posts:
-          existing_like = LikeModel.objects.filter(post_id=post.id, user=user).first()
-          if existing_like:
-             post.has_liked = True
-       return render(request, 'feed.html', {'posts': posts})
-   else:
-      return redirect('/login')
-
-"""
 
 def like_view(request):
    user = check_validation(request)
