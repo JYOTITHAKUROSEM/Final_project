@@ -37,14 +37,16 @@ def signup_view(request):
          print "Signup failed !try again"
    return render(request, 'signup.html', {'form':form})
 def login_view(request):
-     if request.method == 'GET':
+    response_data = {}
+    # if request.method == 'GET':
+    if request.method == 'POST':
          #display login form
-         template_name = 'login.html'
-         login_form = LoginForm()
-     elif request.method == 'POST':
-        #process the form data
-        login_form = LoginForm(request.POST)
-        if login_form.is_valid():
+        # template_name = 'login.html'
+         login_form = LoginForm(request.POST)
+     # elif request.method == 'POST':
+     #    #process the form data
+     #    login_form = LoginForm(request.POST)
+         if login_form.is_valid():
              #validation successful
              username = login_form.cleaned_data['username']
              password = login_form.cleaned_data['password']
@@ -53,23 +55,30 @@ def login_view(request):
              if user:
                  #compare password
                  if check_password(password, user.password):
-                     #login successful
-                     template_name = 'login_success.html'
-                     return render(request, template_name)
+                     token = SessionToken(user=user)
+                     token.create_token()
+                     token.save()
+                     response = redirect('/feed')
+                     response.set_cookie(key='session_token', value=token.session_token)
+                     return response
                  else:
-                      #login failed.
-                      template_name = 'login_fail.html'
-                      return render(request, template_name, {'login_form': LoginForm})
+                     return render(request,'login_fail.html')
+         elif request.method == 'GET':
+              form = LoginForm()
+              response_data['form'] = form
+    return render(request, 'login.html', response_data)
 
-             else:
-                    #user does not exist in db.
-                    template_name = 'login_fail.html'
-     return render(request, template_name, {'login_form':LoginForm})
+                 #login successful
+                     # template_name = 'login_success.html'
+                     # return render(request, template_name)
+                     #login failed.
+                      # template_name = 'login_fail.html'
+                      # return render(request, template_name, {'login_form': LoginForm
+           #else:
+             #        #user does not exist in db.
+             #        template_name = 'login_fail.html'
 
-
-
-
-
+     #return render(request, template_name, {'login_form':LoginForm})
 
 def feed_view(request):
    return render(request, 'feed.html')
@@ -84,7 +93,6 @@ def check_validation(request):
 
 def post_view(request):
    user = check_validation(request)
-
    if user:
       if request.method == 'POST':
          form = PostForm(request.POST, request.FILES)
@@ -93,19 +101,14 @@ def post_view(request):
             caption = form.cleaned_data.get('caption')
             post = PostModel(user=user, image=image, caption=caption)
             post.save()
-
             path = str(BASE_DIR + post.image.url)
-
-            client = ImgurClient(YOUR_CLIENT_ID, YOUR_CLIENT_SECRET)
+            client = ImgurClient('005535c6f80c2dc', '2520684355b7cf9e0941c6d82bcf392af1807084')
             post.image_url = client.upload_from_path(path, anon=True)['link']
             post.save()
-
             return redirect('/feed/')
-
-
-      else:
-         form = PostForm()
-      return render(request, 'post.html', {'form': form})
+         else:
+             form = PostForm()
+             return render(request, 'post.html', {'form': form})
    else:
       return redirect('/login/')
 
