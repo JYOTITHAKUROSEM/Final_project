@@ -9,14 +9,16 @@
 	{% for post in posts %}
 
 	<h1>Posted by : {{ post.user.username}}</h1>
-
+     <p>[{{ post.created_on }}]</p>
 	<img src="{{ post.image_url}}">
 
 	<div id ="caption">
 		Caption: {{ post.caption }}
 		</br>
 	</div>
-
+	<div style="display:inline-block">
+            {{ post.like_count }} likes this
+        </div>
 	<form action = "/like/" method="POST">
 		{% csrf_token %}
 		<input type="hidden" name="post" value="{{ post.id }}">
@@ -27,12 +29,13 @@
 		<input  type="submit" value="Like">
 		{% endif %}
 	</form>
+	     <h4> Likes : {{ post.check_likes }}</h4>
 
-	<h4> Likes : {{ post.check_likes }}</h4>
+
 
 	<form method="POST" action="/comment/">
                 {% csrf_token %}
-                <input type="hidden" name="post" value="{{ post.id }}" />
+                <input type="hidden" name="post" value="{{ post.id }}" >
                 <input type="text" name="comment_text" id="comment_text" placeholder="Make a comment.." value="{{ comment_text }}"/>
                 {{ comment_text }}
                 <input type="submit" class="btn-default btn" value="Comment">
