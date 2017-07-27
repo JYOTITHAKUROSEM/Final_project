@@ -10,6 +10,7 @@ class UserModel(models.Model):
     password=models.CharField(max_length=40)
     created_on=models.DateTimeField(auto_now_add=True)
     updated_on=models.DateTimeField(auto_now=True)
+
 class SessionToken(models.Model):
     user = models.ForeignKey(UserModel)
     session_token = models.CharField(max_length=255)
@@ -26,22 +27,19 @@ class PostModel(models.Model):
 	created_on = models.DateTimeField(auto_now_add=True)
 	updated_on = models.DateTimeField(auto_now=True)
 	has_liked = False
-
-def like_count(self):
-		return len(LikeModel.objects.filter(post=self))
-def comments(self):
-		return CommentModel.objects.filter(post=self).order_by('-created_on')
 class LikeModel(models.Model):
 	user = models.ForeignKey(UserModel)
-	post = models.ForeignKey(PostModel)
-	created_on = models.DateTimeField(auto_now_add=True)
-	updated_on = models.DateTimeField(auto_now=True)
+ 	post = models.ForeignKey(PostModel)
+ 	created_on = models.DateTimeField(auto_now_add=True)
+ 	updated_on = models.DateTimeField(auto_now=True)
+
+
 class CommentModel(models.Model):
-	user = models.ForeignKey(UserModel)
-	post = models.ForeignKey(PostModel)
-	comment_text = models.CharField(max_length=555)
-	created_on = models.DateTimeField(auto_now_add=True)
-	updated_on = models.DateTimeField(auto_now=True)
+ 	user = models.ForeignKey(UserModel)
+ 	post = models.ForeignKey(PostModel)
+ 	comment_text = models.CharField(max_length=555)
+ 	created_on = models.DateTimeField(auto_now_add=True)
+ 	updated_on = models.DateTimeField(auto_now=True)
 
 
 
