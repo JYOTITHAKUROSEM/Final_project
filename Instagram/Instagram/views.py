@@ -67,27 +67,6 @@ def login_view(request):
 
     return render(request, 'login.html', response_data)
 
-def check_user(request):
-    if request.COOKIES.get("session_token"):
-        session = SessionToken.objects.filter(session_token = request.COOKIES.get('session_token')).first()
-        if session:
-            #time_to_live = session.created_on + timedelta(days=1)
-            #if time_to_live > timezone.now():
-            return session.user
-        else:
-            return None
-
-def feed_view(request):
-    user = check_user(request)
-    if user and request.method == 'GET':
-        posts = PostModel.objects.all().order_by('created_on')
-        for post in posts:
-            existing_like = LikeModel.objects.filter(post = post.id,user = user)
-            if existing_like:
-                post.has_liked = True
-        return render(request, 'feed.html', {'posts': posts})
-        # elif user and request.method== 'POST':
-
 def post_view(request):
     user = check_user(request)
     if user == None:
@@ -111,6 +90,20 @@ def post_view(request):
             return HttpResponse("Form data is not valid.")
     else:
         return HttpResponse("Invalid request.")
+
+
+def feed_view(request):
+    user = check_user(request)
+    if user and request.method == 'GET':
+        posts = PostModel.objects.all().order_by('created_on')
+        for post in posts:
+            existing_like = LikeModel.objects.filter(post = post.id,user = user)
+            if existing_like:
+                post.has_liked = True
+        return render(request, 'feed.html', {'posts': posts})
+        # elif user and request.method== 'POST':
+
+
 def like_view(request):
     user = check_user(request)
     if user and request.method == 'POST':
@@ -143,4 +136,13 @@ def comment_view(request):
     else:
         return redirect('/login')
 
-
+# For Validating The session
+def check_user(request):
+    if request.COOKIES.get("session_token"):
+        session = SessionToken.objects.filter(session_token = request.COOKIES.get('session_token')).first()
+        if session:
+            time_to_live = session.created_on + timedelta(days=1)
+            if time_to_live > timezone.now():
+             return session.user
+        else:
+            return None
