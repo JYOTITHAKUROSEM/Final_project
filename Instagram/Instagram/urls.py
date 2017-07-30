@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
-from views import login_view, signup_view, feed_view, post_view, like_view, comment_view
+from views import login_view, signup_view, feed_view, post_view, like_view, comment_view, logout_view, like_comm, search
 #from django.conf.urls.static import static
 # from views import signup_view
 # from views import post_view
@@ -24,10 +24,13 @@ from views import login_view, signup_view, feed_view, post_view, like_view, comm
 urlpatterns = [
    url('post/', post_view),
    url('feed/', feed_view),
+   url('logout/',logout_view),
    url('like', like_view),
    url('comment', comment_view),
    url('login/', login_view),
    url('', signup_view),
+   url('like_comm/', like_comm),
+   url('search/',search),
 ]
 
 

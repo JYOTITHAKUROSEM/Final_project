@@ -1,22 +1,45 @@
 <html>
 <head>
+	<style>
+		body{
+ width: 100%;
+ height: 100%;
+ background-color:#FFEBCD ;
+ background-size: 100% 100%;
+ }
+
+
+	</style>
 </head>
 
 <body>
-
-<div >
+<p valign="top"align="left">
+	<a href="/post/"><input type="submit" value="Create Post" class="btn btn-success"></a>&nbsp;&nbsp;&nbsp;
+	<a href="/Logout/">
+	<input type="submit"value="Logout"class="btn btn-info">
+	</a></p>
+<table height="100%"width="100%"bgcolor="#FFFACD">
+	<tbody align="center">
+	<td align="center">
+		<div >
 
 	{% for post in posts %}
+    <h2 style="color:#FF1493;">Posted By : {{ post.user.username }}</h2>
+	<p>[{{ post.created_on }}]</p>
+	 <img style="display:inline-block; width:350px; height:300px;"src="{{ post.image_url}}">
 
-	<h1>Posted by : {{ post.user.username}}</h1>
+	<span>
+		{{ post.caption }}
+	</span>
 
-	<img src="{{ post.image_url}}">
 
 	<div id ="caption">
 		Caption: {{ post.caption }}
 		</br>
 	</div>
-
+	<div style="display:inline-block">
+            {{ post.like_count }} likes this
+        </div>
 	<form action = "/like/" method="POST">
 		{% csrf_token %}
 		<input type="hidden" name="post" value="{{ post.id }}">
@@ -27,19 +50,9 @@
 		<input  type="submit" value="Like">
 		{% endif %}
 	</form>
+	     <h4> Likes : {{ post.check_likes }}</h4>
 
-	<h4> Likes : {{ post.check_likes }}</h4>
-	   <div style="display:inline-block">
-            <form method="POST" action="/like/">
-              {% csrf_token %}
-         {% if post.has_liked %)
-			<input type="submit" class="btn btn default" value="Unlike">
-	     {% else %}
-	        <input type="submit" class="btn btn-default" value="like">
-	     {% endif %}
 
-            </form>
-	   </div>
 
 	<form method="POST" action="/comment/">
                 {% csrf_token %}
@@ -48,11 +61,24 @@
                 {{ comment_text }}
                 <input type="submit" class="btn-default btn" value="Comment">
 	</form>
-
-			    {% for comment in post.comments %}
-	            <p><b>{{ comment.user.username }} [{{ comment.created_on }}]</b> ({{ comment.comment_text }})</p>
-			    {% endfor %}
-
+			{% for comment in post.comments %}
+                        <p><b><span class="user">{{ comment.user.username }}</span><br> <span class="dated">[{{ comment.created_on }}]:</b></span><span class="comm">{{ comment.comment_text }}</span></p>
+                        {{ comment.upvote }} likes this
+                     {% for comment in post.comments %}
+                        <p><b><span class="user">{{ comment.user.username }}</span><br> <span class="dated">[{{ comment.created_on }}]:</b></span><span class="comm">{{ comment.comment_text }}</span></p>
+                        {{ comment.upvote }} likes this
+                    <form method="POST" action="/like_comm/">
+                        {% csrf_token %}
+                            <input type="hidden" name="comment" value="{{ comment.id }}" />
+                        {% if comment.upvoted %}
+                            <input type="submit" value="Up/Down Vote" class="button">
+                        {% else %}
+                            <input type="submit" value="Up/Down Vote" class="button">
+                        {% endif %}
+                    </form>
+			 {% endfor %}
+			    {% endif %}
+					</form>
     {% endfor %}
 
 </div>

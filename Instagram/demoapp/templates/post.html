@@ -9,15 +9,52 @@
       
       <!--Bootstrap-->
       <link href="css/bootstrap.css" rel="stylesheet">
+       <style>
+           body{
+ width: 100%;
+ height: 100%;
+ background-color:#FFEBCD ;
+ background-size: 100% 100%;
+ }
+ a:link,a:visited {
+       background-color:green;
+       display:inline block;
+            text-decoration:none;
+       border_radius:5px;
+             text-align:center;
+       padding: 8px 15px;
+       color:white;
+               }
+       }
+   .d1
+       {
+            font-style:bold;
+            float:center;
+            font:Times new roman;
+            font-size:20px;
+            background-color:#F5FFFA;
+            color:grey;
+       }
+       </style>
+
    </head>
    <body>
+   <p align="left">  <a href="/Logout/"class="btn btn-success">Logout</a>
+   </p>
+        <div class="row">
+      <div class="col-sm-4 col-sm-offset-4"><br><br>
+              <table width="50%"bgcolor="cyan"height="100%"align="center"><tbody width="40%"height="50%"bgcolor="1px solid red"><tr>
+                  <td bgcolor="pink" align="center">
+
+                    <h1 id="h1" style="font-family:Monotype Corsiva; color:#F50057; font-size:40px;">Instagram Clone</h1>
+                    <h2 class="d1"> Create Your Post<br></h2>
 	   <form action="" method ="POST" enctype="multipart/form-data"><br><br>
 		   {% csrf_token %}
 		   image:-
 		   <input type="file"class="btn btn-default" name="image" value="{{ image }}"><br><br>
 		   <input type="text" name="caption" value="{{ caption }}"><br><br>
-	       <input type="submit"class="btn btn-default" name="add a picture" value = "POST">
-     </form>
+	       <input type="submit"class="btn btn-success" name="add a picture" value = "POST">
+       </form></td></tr></tbody></table></div></div>
    </body>
 </html>
      

@@ -1,1 +1,48 @@
-<h1>User registered successfully. try login</h1>
+{% load static %}
+<!Doctype html>
+<html>
+   <head>
+      <title>Sign Up</title>
+
+          <meta charset="utf-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+       <!--Bootstrap-->
+       <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+       <link rel="stylesheet"type=""text/css"href"{% static "css/site.css"%}" />
+      <style>
+body{
+ width: 100%;
+ height: 100%;
+ background-color:#FFEBCD ;
+ background-size: 100% 100%;
+ }
+ </style>
+       <body>
+           <div class="row"align="center"class="flex-container">
+                <div class="col-sm-4 col-sm-offset-4" class="div1">
+                    <br><br><br><br>
+
+                <table width="80%"bgcolor="cyan"height="100%"><tbody width="40%"height="50%"bgcolor="blue"><tr><td bgcolor="white" align="center">
+
+                    <h1 id="h1" style="font-family:Monotype Corsiva; color:#F50057; font-size:40px;">Instagram Clone</h1>
+                    <h3 class="d1"> User registered successfully. try login<br></h3>
+                    <br>
+                    {% csrf_token %}
+                       <br>
+                    <a href="/login/"class="btn btn-success">Login</a>
+
+
+       </td>
+               </tr></tbody></table></div>
+      </div>
+      <!--Javascript files-->
+      <!--Jquery library-->
+      <script src="js/jquery-3.2.1.js"></script>
+      <!--Bootstrap js Library-->
+      <script scr="js/bootstrap.js"></script>
+
+
+</body>
+</html>
+

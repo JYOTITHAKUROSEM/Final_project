@@ -17,32 +17,35 @@ from django.contrib.auth.hashers import make_password, check_password
 
 #Create your views here
 def signup_view(request):
-    dict={}
     if request.method == 'GET':
         signup_form = SignUpForm()                             # calling & display signup form
         template_name = 'signup.html'                          # rendering to signup.html after get reqst
-
     elif request.method == 'POST':
-        signup_form = SignUpForm(request.POST)                 # calling & process the form data
-        if signup_form.is_valid():                             # validate the form data
+        signup_form = SignUpForm(request.POST)
+        print "line 25"# calling & process the form data
+        if signup_form.is_valid():
+            print "line 27"# validate the form data
             username = signup_form.cleaned_data['username']
-            name     = signup_form.cleaned_data['name']
-            email    = signup_form.cleaned_data['email']
-            password = signup_form.cleaned_data['password']
-            while len(username) < 4:
-                dict['invalid_username']="Usename must be atleast 5 characters"
-                return render(request, "signup.html",dict)
-            while len(password) < 5:
-                dict['invalid_password']="Password must be at least 5 characters"
-                return render(request, "signup.html",dict)
-            new_user = UserModel(name=name, email=email, password=make_password(password), username=username)
-            new_user.save()                                    # save data to db
-            template_name = 'success.html'                     # rendering to success.html after post req
+            name = signup_form.cleaned_data['name']
+            email = signup_form.cleaned_data['email']
+            password =signup_form.cleaned_data['password']
+            #data validation
+            if(len(username)<5):
+                new_user = UserModel(name=name, email=email, password=make_password(password), username=username)
+                new_user.save()  # save data to db
+                template_name = 'success.html'  # rendering to success.html after post req
+            else:
+                # return redirect('/signup/')
+                dict = {"key": "Pleas fill the form"}
+                #return render(request, 'signup.html', dict)
+                #return render(request, 'error.html')
         else:
+            print "line 41"
             dict={"key":"Pleas fill the form"}
             return render(request,'signup.html',dict)
-
+    print "line 44"
     return render(request,template_name, {'signup_form': signup_form})
+
 def login_view(request):
     response_data = {}
     # if request.method == 'GET':
@@ -161,13 +164,6 @@ def logout_view(request):
     delete_user = SessionToken.objects.filter(user = user_id)
     delete_user.delete()
     return redirect('/signup/')
-
-def search(request):
-	if "q" in request.GET:
-		q = request.GET["q"]
-		posts = PostModel.objects.filter(user__username__icontains=q)
-		return render(request, "feed.html", {"posts": posts, "query": q})
-	return render(request, "feed.html")
 def like_comm(request):
 	user = check_user(request)
 	if user and request.method == 'POST':

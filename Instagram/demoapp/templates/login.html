@@ -9,16 +9,18 @@
 
       <!--Bootstrap-->
       <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+   <style>
+body{
+ width: 100%;
+ height: 100%;
+ background-color:#FFEBCD ;
+ background-size: 100% 100%;
+ }
+ </style>
    </head>
-
    <body>
       <!--header-->
-
-
-
-
-
-                    <header>
+                           <header>
                            <nav class="navbar navbar-inverse">
                                   <div class="container">
                    <div class="navbar-header">
@@ -72,39 +74,33 @@
                                     </ul>
                                     </li>
                                     </ul>
-                   </div>
-            </nav>
+      </div></nav>
       </header>
       <!--/header-->
-
-
-
-
-
-                <!--footer starts-->
-
-           <div class="row">
+      <!--footer starts-->
+      <div class="row">
       <div class="col-sm-4 col-sm-offset-4">
+              <table width="80%"bgcolor="cyan"height="100%"><tbody width="40%"height="50%"bgcolor="blue"><tr><td bgcolor="pink" align="center">
 
-         <h1><p style="font-family:Monotype Corsiva; color:pink; font-size:50px;">Instagram Clone</p></h1>
-                   <h1><p style="font-family:Monotype Corsiva; color:pink; font-size:35px;">Login</p></h1>
-
-         <form method="post">
-         {% csrf_token %}
+                    <h1 id="h1" style="font-family:Monotype Corsiva; color:#F50057; font-size:40px;">Instagram Clone</h1>
+                    <h2 class="d1"> Login<br></h2>
+                    <br>
+            <form method="post">
+            {% csrf_token %}
             <div>
                <label for="username">Username:</label>
                <input id="username" type="text" name="username" value="{{ username }}">
-                 </div>
+            </div>
             <div>
                <label for="password">Password:</label>
                <input id="password" type="Password" name="password" value="{{ password }}">
-            </div>
-               <input type="submit" value="Login" class="btn btn-success">
-         </form>
-      </div>
-      </div>
-                <nav class="navbar navbar-inverse navbar-fixed-bottom">
-         <div class="container-fluid">
+            </div> <br><div>
+            <input type="submit" value="Login" class="btn btn-success"></div>
+         </form></td></tr></tbody></table>
+        </div>
+        </div>
+             <nav class="navbar navbar-inverse navbar-fixed-bottom">
+            <div class="container-fluid">
             <!--row3-->
             <div class="row">
                <!--Left column-->
@@ -145,4 +141,5 @@
       <script src="{% static "js/bootstrap.js" %}"></script>
    </body>
 </html>
+
 
