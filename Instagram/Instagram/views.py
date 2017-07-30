@@ -16,6 +16,8 @@ from django.contrib.auth.hashers import make_password, check_password
 
 
 #Create your views here
+
+# SignUp page
 def signup_view(request):
     dict={}
     if request.method == 'GET':
@@ -43,6 +45,9 @@ def signup_view(request):
             return render(request,'signup.html',dict)
 
     return render(request,template_name, {'signup_form': signup_form})
+
+
+# Login Page
 def login_view(request):
     response_data = {}
     # if request.method == 'GET':
@@ -74,7 +79,7 @@ def login_view(request):
         response_data['form'] = form
 
     return render(request, 'login.html', response_data)
-
+# Update post
 def post_view(request):
     user = check_user(request)
     if user == None:
@@ -99,7 +104,7 @@ def post_view(request):
     else:
         return HttpResponse("Invalid request.")
 
-
+# Home page
 def feed_view(request):
     user = check_user(request)
     if user:
@@ -113,6 +118,7 @@ def feed_view(request):
 
     else:
         return redirect('/login/')
+# Like /Unlike Page
 def like_view(request):
     user = check_user(request)
     if user and request.method == 'POST':
@@ -129,6 +135,8 @@ def like_view(request):
             HttpResponse("form data is not valid")
     else:
         return redirect('/login/')
+
+# Comment Page
 def comment_view(request):
     user = check_user(request)
     if user and request.method == 'POST':
@@ -156,18 +164,21 @@ def check_user(request):
         else:
             return None
 
+# Logout Page
 def logout_view(request):
     user_id = check_user(request)
     delete_user = SessionToken.objects.filter(user = user_id)
     delete_user.delete()
     return redirect('/signup/')
-
+# Search Page
 def search(request):
 	if "q" in request.GET:
 		q = request.GET["q"]
 		posts = PostModel.objects.filter(user__username__icontains=q)
 		return render(request, "feed.html", {"posts": posts, "query": q})
 	return render(request, "feed.html")
+
+# Upvoting Page
 def like_comm(request):
 	user = check_user(request)
 	if user and request.method == 'POST':
